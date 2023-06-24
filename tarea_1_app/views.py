@@ -14,8 +14,8 @@ def get_response():
 
     payload = {
         'orden': "nuevo",
-        'page':3,
-        'pageSize':10,
+        'page':1,
+        'pageSize':20,
     }
     payload = json.dumps(payload)
     headers = {'content-type': 'application/json'}
@@ -69,17 +69,21 @@ def add_info_jurisprudences(jurisprudences):
         jurisprudences_list.append(jurisprudence)
     return jurisprudences_list
 
+def index(request):
+    context = {}
+    return render(request, 'index.html', context)
 
 def tarea_1(request):
-    #hacer que con un boton se pueda guardar la pagina actual
     context = {}
 
     response = get_response()
     response_loaded = json.loads(response)
     jurisprudence = response_loaded['jurisprudencias']
-    #save_jurisprudence(jurisprudence)
+    save_jurisprudence(jurisprudence)
     jurisprudences = Jurisprudencia.objects.all()
     jurisprudences = add_info_jurisprudences(jurisprudences)
     context['response'] = jurisprudences
     
     return render(request, 'index_view_t1.html', context)
+
+

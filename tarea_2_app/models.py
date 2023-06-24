@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Concesion(models.Model):
+    
     id = models.IntegerField(unique=True, primary_key=True) #n_concesion
     tipo_de_concesion = models.CharField()
     comuna = models.CharField()
@@ -13,10 +14,4 @@ class Concesion(models.Model):
     concesionario = models.CharField()
     tipo_vigencia = models.CharField()
 
-    #objeto
-    #sector geografico
-    #data region
-    #fecha vencimiento
-    #Fecha Última Actualización Sector
-    #Fecha Última Actualización Imagen Decreto
-    #Fecha Última Actualización Imagen Mapa	
+    

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #new apps
     'tarea_1_app',
+    'tarea_2_app',
 ]
 
 MIDDLEWARE = [

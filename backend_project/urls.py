@@ -21,5 +21,6 @@ import tarea_1_app.views as t1
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', t1.index, name='index'),
     path('tarea_1', t1.tarea_1, name='tarea_1'),
 ]
