@@ -3,7 +3,7 @@ Proyecto de prueba que consiste en dos tareas, para la tarea 1 se usa la libreri
 mostradas en una pagina hecha con bootstrap y para la tarea 2 se intento utilizar Selenium WebDriver (aunque era mi primera vez utilizando, logre entender el funcionamiento, 
 mas no completar la tarea, con mas tiempo de estudio estoy seguro que lo hubiese logrado.
 ## Instalación 
-Se utiliza el framework Django 4, las librerias psycopg2-binary (para el uso de DB PostgreSQL) y requests.
+Se utiliza el framework Django 4, las librerias psycopg2-binary (para el uso de DB PostgreSQL), requests y selenium.
 ## Uso
 Al ingresar al index del trabajo se presentan tres botones, "Tarea 1" (para acceder a la vista de la tarea 1), "Tarea 2" (para acceder a la vista de la tarea 2) y "Panel de Administrador" (para 
 acceder a la vista del panel de administrador).
