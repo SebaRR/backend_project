@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+import json
 # Create your views here.
 
 from selenium import webdriver
@@ -7,23 +7,75 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+def data_to_json():
+    # data copiada a mano, para mostrar la creacion del archivo .json
+    data = {}
+    data['concesiones'] = []
+    data['concesiones'].append({
+        'n_concesion': '271',
+        'tipo_concesion': 'Destinaciones',
+        'comuna': 'TOCOPILLA',
+        'lugar': 'PUERTO DE TOCOPILLA, COMUNA DE TOCOPILLA',
+        'n_rs_ds':'744 DS',
+        'tipo_tramite':'Otorgamiento',
+        'concesionario':'---',
+        'tipo_vigencia':'Entrada',
+        })
+
+    data['concesiones'].append({
+        'n_concesion': '363',
+        'tipo_concesion': 'Destinaciones',
+        'comuna': 'TALTAL',
+        'lugar': 'CALETA TALTAL, COMUNA DE TALTAL',
+        'n_rs_ds':'121 DS',
+        'tipo_tramite':'Otorgamiento',
+        'concesionario':'MINISTERIO DE OBRAS PUBLICAS',
+        'tipo_vigencia':'Entregada, con trámite en proceso',
+        })
+    
+    data['concesiones'].append({
+        'n_concesion': '420',
+        'tipo_concesion': 'CCMM (1 a 10 años)',
+        'comuna': 'MEJILLONES',
+        'lugar': 'PUERTO DE MEJILLONES, COMUNA DE MEJILLONES',
+        'n_rs_ds':'190 DS',
+        'tipo_tramite':'Transferencia Total',
+        'concesionario':'CORPESCA S.A.',
+        'tipo_vigencia':'Entregada',
+        })
+    
+    with open('data.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
+
 
 def tarea_2_script():
     driver = webdriver.Chrome()
     url = 'https://www.concesionesmaritimas.cl'
     driver.get(url)
 
-    #filtrar 
-    #filtro1 = driver.find_element(By.NAME, 'variableRegion')
-    #filtro1.select_by_visible_text('2')
-    """#filtro1.send_keys('2')
-    filtro2 = driver.find_element(By.NAME, 'variableGobmar')
-    filtro2.send_keys('GOBERNACIÓN MARÍTIMA ANTOFAGASTA')
-    filtro3 = driver.find_element(By.NAME, 'variableCapuerto')
-    filtro3.send_keys('ANTOFAGASTA')
+    # Cambiar el contexto
+    frameset1 = driver.find_element(By.TAG_NAME, 'frameset')
+    driver.switch_to.frame(frameset1)
+
+    frameset2 = driver.find_element(By.TAG_NAME, 'frameset')
+    driver.switch_to.frame(frameset2)
+
+    frame1 = driver.find_element(By.TAG_NAME, 'frame')
+    driver.switch_to.frame(frame1)
+
+    # Esperar hasta que el elemento <select> esté presente en el frame
+    elemento_select1 = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 'variableRegion')))
+    elemento_select1.select_by_visible_text('II')
+    elemento_select2 = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 'variableGobmar')))
+    elemento_select2.select_by_visible_text('GOBERNACIÓN MARÍTIMA ANTOFAGASTA')
+    elemento_select3 = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 'variableCapuerto')))
+    elemento_select3.select_by_visible_text('ANTOFAGASTA')
+
     boton_filtrar = driver.find_element(By.NAME, 'verlistado')
     boton_filtrar.click()
-
+    
+    # Se obtienen los datos de la tabla
     wait = WebDriverWait(driver, 10)
     tabla = wait.find_element_by_css_selector('table[style*="color: #000080"]')
 
@@ -31,41 +83,8 @@ def tarea_2_script():
     for fila in filas:
         celdas = fila.find_elements(By.TAG_NAME, 'td')
         for celda in celdas:
-            print(celda.text)"""
-
-    #elemento_select = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 'variableRegion')))
-
-    # Acciones adicionales con el elemento select
-    # Por ejemplo, obtener las opciones seleccionables:
-
-    # Cambiar al contexto del primer frame
-    frameset1 = driver.find_element(By.TAG_NAME, 'frameset')
-    driver.switch_to.frame(frameset1)
-
-    frame1 = driver.find_element(By.TAG_NAME, 'frame')
-    driver.switch_to.frame(frame1)
-
-    # Cambiar al contexto del segundo frameset
-    frameset2 = driver.find_element(By.TAG_NAME, 'frameset')
-    driver.switch_to.frame(frameset2)
-
-    # Cambiar al contexto del segundo frame
-    frame2 = driver.find_element(By.TAG_NAME, 'frame')
-    driver.switch_to.frame(frame2)
-
-    # Esperar hasta que el elemento <select> esté presente en el frame
-    elemento_select = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.NAME, 'variableRegion'))
-    )
-
-    # Acciones adicionales con el elemento <select>
-    opciones = elemento_select.find_elements(By.TAG_NAME, 'option')
-    for opcion in opciones:
-        print(opcion.text)
-
-    # Cambiar de nuevo al contexto predeterminado
-    
+            print(celda.text)
 
     driver.quit()
 
-tarea_2_script()
+
